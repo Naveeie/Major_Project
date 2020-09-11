@@ -1,0 +1,55 @@
+#set link auto on
+Options +FollowSymLinks -MultiViews
+DirectoryIndex index.php
+DirectoryIndex index.html
+Options -Indexes
+RewriteEngine on
+
+RewriteRule ^(admin)($|/) - [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !(\.[a-zA-Z0-9]{1,5}|/)$
+
+#RewriteCond %{HTTPS} !on
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+RewriteRule (.*)$ http://localhost/pos/tempp/admin/$1/ [R=301,L]
+
+ErrorDocument 403 http://localhost/pos/tempp/admin/403.html
+ErrorDocument 404 http://localhost/pos/tempp/admin/index
+ErrorDocument 401 http://localhost/pos/tempp/admin/401.html
+ErrorDocument 500 http://localhost/pos/tempp/admin/500.html
+ErrorDocument 503 http://localhost/pos/tempp/admin/503.html
+
+RewriteRule ^403.html$ 403.php [L]
+RewriteRule ^404.html$ 404.php [L]
+RewriteRule ^401.html$ 401.php [L]
+RewriteRule ^500.html$ 500.php [L]
+RewriteRule ^503.html$ 503.php [L]
+
+RewriteRule ^inquiry-list/$ inquiry-list.php [QSA,L] 
+RewriteRule ^customer-report/$ customer-report.php [QSA,L] 
+RewriteRule ^stock-availability/$ stock-availability.php [QSA,L] 
+RewriteRule ^addproductcategory/$ addproductcategory.php [QSA,L]
+RewriteRule ^addproductcategory/([^/]*)/$ addproductcategory.php?product_category=$1 [QSA,L] 
+RewriteRule ^customer/$ customer.php [QSA,L]
+RewriteRule ^customer/([^/]*)/$ customer.php?customer_id=$1 [QSA,L] 
+RewriteRule ^customerlist/$ customerlist.php [QSA,L]
+RewriteRule ^view-customer/([^/]*)/$ view-customer.php?customer_id=$1 [QSA,L] 
+RewriteRule ^product/$ product.php [QSA,L]
+RewriteRule ^productlist/$ productlist.php [QSA,L]
+RewriteRule ^product/([^/]*)/$ product.php?p_id=$1 [QSA,L] 
+
+
+
+
+RewriteRule ^login/$ login.php [QSA,L] 
+RewriteRule ^index/$ index.php [QSA,L] 
+RewriteRule ^dashboard/$ dashboard.php [QSA,L] 
+RewriteRule ^profile/$ profile.php [QSA,L] 
+AddType text/css cssgz
+AddType text/javascript jsgz
+AddEncoding x-gzip .cssgz .jsgz
+# for all files in min directory
+FileETag None
